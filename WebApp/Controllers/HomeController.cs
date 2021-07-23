@@ -52,15 +52,20 @@ namespace WebApp.Controllers
         {
             try
             {
-                _db.KanbanCards.Remove(_db.KanbanCards.Find(id));
+                var card = _db.KanbanCards.Find(id);
+                if (card == null)
+                {
+                    return NotFound();
+                }
+                _db.KanbanCards.Remove(card);
                 _db.SaveChanges();
             }
             catch (Exception e)
             {
-                return NotFound();
+                return NotFound(e.Message);
             }
 
-            return RedirectToAction(nameof(Index));
+            return View(nameof(Index));
         }
 
         public IActionResult Move(int? id, bool forward) {
