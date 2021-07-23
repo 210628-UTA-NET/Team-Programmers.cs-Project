@@ -7,11 +7,11 @@ namespace WebApp.Models {
         public IEnumerable<KanbanCard> Review { get; set; }
         public IEnumerable<KanbanCard> Testing { get; set; }
         public IEnumerable<KanbanCard> Done { get; set; }
-        int NCols { get; set; }
+        public string NewTitle { get; set; }
+        public string NewDesc { get; set; }
 
 
-        public KanbanBoard() {
-            NCols = 5;
+        public KanbanBoard() { 
             Backlog = new List<KanbanCard>();
             InProgress = new List<KanbanCard>();
             Review = new List<KanbanCard>();

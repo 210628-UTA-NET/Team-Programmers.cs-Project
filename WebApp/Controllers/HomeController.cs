@@ -34,14 +34,14 @@ namespace WebApp.Controllers
             return View(board);
         }
 
-        public IActionResult Add(string title, string details) {
+        public IActionResult Add(KanbanBoard board) {
 
-            if (title == null || details == null) return RedirectToAction(nameof(Index));
+            if (board.NewTitle == null || board.NewDesc == null) return RedirectToAction(nameof(Index));
 
             _db.KanbanCards.Add(new() {
-                Title = title,
+                Title = board.NewTitle,
                 Column = 0,
-                Details = details,
+                Details = board.NewDesc,
             });
             _db.SaveChanges();
 

@@ -2,21 +2,46 @@
 @{ int limit = 2; int count = 0;}
 
 @functions {
-    void MakeCard(KanbanCard p_card) {
-        <div class="card">
+    async Task MakeCard(KanbanCard p_card) {
+        <div class="card" style="margin-top: 15px">
             <div class="card-header">
                 <h5>@p_card.Title</h5>
             </div>
             <div class="card-body">
-                <div class="mb-3">
-                    <label for="desc" class="form-label">Details</label>
-                    <textarea class="form-control" rows="3">@p_card.Details</textarea>
-                </div>
-                <a href=@Url.Action("Edit", "Home", new {id = p_card.ID }) />
-                <a href="@Url.Action("Delete", "Home", new {id = p_card.ID})" class="btn btn-primary">Delete</a>
-                <a href="@Url.Action("Move", "Home", new {id = p_card.ID, forward = false})" class="btn btn-primary">Left</a>
-                <a href="@Url.Action("Move", "Home", new {id = p_card.ID, forward = true})" class="btn btn-primary">Right</a>
+                <form action="@Url.Action("Edit", "Home")">
+                    <div class="mb-3">
+                        @Html.Hidden("id", p_card.ID)
+                        <label for="desc" class="form-label">Details</label>
+                        <textarea class="form-control" rows="3" name="desc">@p_card.Details</textarea>
+                    </div>
+                    <div class="container">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-save" style="margin-right:5px"></i>Save</button>
+                        <a href="@Url.Action("Delete", "Home", new {id = p_card.ID})" class="btn btn-primary"><i class="bi bi-trash" ></i> Delete</a>
+                    </div>
+                    <div class="container-fluid justify-content-between" style="padding-top: 20px">
+                        <a href="@Url.Action("Move", "Home", new {id = p_card.ID, forward = false})" class="btn btn-primary"><i class="bi bi-caret-left"></i></a>
+                        <a href="@Url.Action("Move", "Home", new {id = p_card.ID, forward = true})" class="btn btn-primary"><i class="bi bi-caret-right"></i></a>
+                    </div>
+                </form>
             </div>
+        </div>
+    }
+
+    async Task MakeCreate() {
+        <div class="card" style="margin-top: 15px">
+            <form asp-action="Add">
+                <div class="card-header">
+                    <label asp-for="NewTitle">Title:</label>
+                    <input asp-for="NewTitle" class="form-control" type="text" id="title" />
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="NewDesc" class="form-label">Details</label>
+                        <textarea asp-for="NewDesc" class="form-control" rows="3" id="details"> </textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
         </div>
     }
 }
@@ -25,43 +50,39 @@
     <div class="row text-center" style="min-height: 70vh; height: 100%">
         <div class="col flex-column bg-primary">
             <h2>Backlog</h2>
-            @foreach (var card in Model.Backlog)
-            {
-                MakeCard(card);
+            @foreach (var card in Model.Backlog) {
+                await MakeCard(card);
             }
+            @{ await MakeCreate(); } 
         </div>
         @{ count = Model.InProgress.Count(); }
         <div class="@("col flex-column " + (count > limit ? "bg-danger" : "bg-secondary"))">
             <h2>In Progress</h2>
-            @foreach (var card in Model.InProgress)
-            {
-                MakeCard(card);
+            @foreach (var card in Model.InProgress) {
+                await MakeCard(card);
             }
         </div>
 
         @{ count = Model.Review.Count(); }
         <div class="@("col flex-column " + (count > limit ? "bg-danger" : "bg-success"))">
             <h2>Review</h2>
-            @foreach (var card in Model.Review)
-            {
-                MakeCard(card);
+            @foreach (var card in Model.Review) {
+                await MakeCard(card);
             }
         </div>
 
         @{ count = Model.Testing.Count(); }
         <div class="@("col flex-column " + (count > limit ? "bg-danger" : "bg-info"))">
             <h2>Testing</h2>
-            @foreach (var card in Model.Testing)
-            {
-                MakeCard(card);
+            @foreach (var card in Model.Testing) {
+                await MakeCard(card);
             }
         </div>
 
         <div class="col flex-column bg-warning">
             <h2>Delivered</h2>
-            @foreach (var card in Model.Done)
-            {
-                MakeCard(card);
+            @foreach (var card in Model.Done) {
+                await MakeCard(card);
             }
         </div>
     </div>
