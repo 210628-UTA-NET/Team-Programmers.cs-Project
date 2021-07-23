@@ -24,11 +24,11 @@ namespace WebApp.Controllers
         {
             IList<KanbanCard> results = _db.KanbanCards.Select(c => c).ToList();
             KanbanBoard board = new() {
-                Backlog = results.Where(c => c.ID == 0),
-                InProgress = results.Where(c => c.ID == 1),
-                Review = results.Where(c => c.ID == 2),
-                Testing = results.Where(c => c.ID == 3),
-                Done = results.Where(c => c.ID == 4),
+                Backlog = results.Where(c => c.ID == 0).ToList(),
+                InProgress = results.Where(c => c.ID == 1).ToList(),
+                Review = results.Where(c => c.ID == 2).ToList(),
+                Testing = results.Where(c => c.ID == 3).ToList(),
+                Done = results.Where(c => c.ID == 4).ToList(),
             };
 
             return View(board);

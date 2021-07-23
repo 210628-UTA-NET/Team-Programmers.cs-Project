@@ -29,25 +29,25 @@
         </div>
         <div class="col flex-column bg-secondary">
             <h2>In Progress</h2>
-            @foreach (var card in Model.Backlog) {
+            @foreach (var card in Model.InProgress) {
                 MakeCard(card);
             }
         </div>
         <div class="col flex-column bg-success">
             <h2>Review</h2>
-            @foreach (var card in Model.Backlog) {
+            @foreach (var card in Model.Review) {
                 MakeCard(card);
             }
         </div>
         <div class="col flex-column bg-info">
             <h2>Testing</h2>
-            @foreach (var card in Model.Backlog) {
+            @foreach (var card in Model.Testing) {
                 MakeCard(card);
             }
         </div>
         <div class="col flex-column bg-warning">
             <h2>Delivered</h2>
-            @foreach (var card in Model.Backlog) {
+            @foreach (var card in Model.Done) {
                 MakeCard(card);
             }
         </div>
