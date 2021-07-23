@@ -12,7 +12,8 @@
                     <label for="desc" class="form-label">Details</label>
                     <textarea class="form-control" rows="3">@p_card.Details</textarea>
                 </div>
-                <a href=@Url.Action("Edit", "Home", new {id = p_card.ID })/> 
+                <a href=@Url.Action("Edit", "Home", new {id = p_card.ID }) />
+                <a href="@Url.Action("Delete", "Home", new {id = p_card.ID})" class="btn btn-primary">Delete</a>
                 <a href="@Url.Action("Move", "Home", new {id = p_card.ID, forward = false})" class="btn btn-primary">Left</a>
                 <a href="@Url.Action("Move", "Home", new {id = p_card.ID, forward = true})" class="btn btn-primary">Right</a>
             </div>
