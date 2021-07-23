@@ -11,7 +11,8 @@ namespace WebApp
 {
     public class DBContext : DbContext
     {
-        
+        public DBContext(DbContextOptions options) : base(options) { }
+
         public DbSet<KanbanCard> KanbanCards { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder){
         optionsBuilder.UseSqlServer(@"Server=tcp:jhe.database.windows.net,1433;Initial Catalog=KanbanBoard;Persist Security Info=False;User ID=asapjules;Password=Atomicbomb1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
