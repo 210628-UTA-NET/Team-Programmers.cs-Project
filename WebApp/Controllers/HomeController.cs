@@ -50,8 +50,15 @@ namespace WebApp.Controllers
 
         public IActionResult Delete(int id)
         {
-            _db.KanbanCards.Remove(_db.KanbanCards.Find(id));
-            _db.SaveChanges();
+            try
+            {
+                _db.KanbanCards.Remove(_db.KanbanCards.Find(id));
+                _db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return NotFound();
+            }
 
             return View(nameof(Index));
         }
