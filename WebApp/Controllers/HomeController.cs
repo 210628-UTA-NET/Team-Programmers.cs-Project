@@ -48,6 +48,14 @@ namespace WebApp.Controllers
             return View(nameof(Index));
         }
 
+        public IActionResult Delete(int id)
+        {
+            _db.KanbanCards.Remove(_db.KanbanCards.Find(id));
+            _db.SaveChanges();
+
+            return View(nameof(Index));
+        }
+
         public IActionResult Move(int? id, bool forward) {
             if (id == null) return View(nameof(Index));
             KanbanCard selected = _db.KanbanCards.Find(id);
