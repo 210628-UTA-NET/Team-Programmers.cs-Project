@@ -65,11 +65,11 @@ namespace WebApp.Controllers
                 return NotFound(e.Message);
             }
 
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Move(int? id, bool forward) {
-            if (id == null) return View(nameof(Index));
+            if (id == null) return RedirectToAction(nameof(Index));
             KanbanCard selected = _db.KanbanCards.Find(id);
 
             if (forward && selected.Column + 1 < 5) selected.Column++;
@@ -80,7 +80,7 @@ namespace WebApp.Controllers
         }
 
         public IActionResult Edit(int? id, string desc) {
-            if (id  == null) return View(nameof(Index));
+            if (id  == null) return RedirectToAction(nameof(Index));
             KanbanCard selected = _db.KanbanCards.Find(id);
 
             if (desc != null) {
