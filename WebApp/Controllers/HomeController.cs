@@ -24,11 +24,11 @@ namespace WebApp.Controllers
         {
             IList<KanbanCard> results = _db.KanbanCards.Select(c => c).ToList();
             KanbanBoard board = new() {
-                Backlog = results.Where(c => c.ID == 0).ToList(),
-                InProgress = results.Where(c => c.ID == 1).ToList(),
-                Review = results.Where(c => c.ID == 2).ToList(),
-                Testing = results.Where(c => c.ID == 3).ToList(),
-                Done = results.Where(c => c.ID == 4).ToList(),
+                Backlog = results.Where(c => c.Column == 0).ToList(),
+                InProgress = results.Where(c => c.Column == 1).ToList(),
+                Review = results.Where(c => c.Column == 2).ToList(),
+                Testing = results.Where(c => c.Column == 3).ToList(),
+                Done = results.Where(c => c.Column == 4).ToList(),
             };
 
             return View(board);
@@ -36,7 +36,7 @@ namespace WebApp.Controllers
 
         public IActionResult Add(string title, string details) {
 
-            if (title == null || details == null) return View(nameof(Index));
+            if (title == null || details == null) return RedirectToAction(nameof(Index));
 
             _db.KanbanCards.Add(new() {
                 Title = title,
@@ -45,7 +45,7 @@ namespace WebApp.Controllers
             });
             _db.SaveChanges();
 
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Delete(int id)
@@ -60,7 +60,7 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Move(int? id, bool forward) {
@@ -71,7 +71,7 @@ namespace WebApp.Controllers
             else if (!forward && selected.Column - 1 >= 0) selected.Column--;
 
             _db.SaveChanges();
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(int? id, string desc) {
@@ -84,7 +84,7 @@ namespace WebApp.Controllers
 
             _db.SaveChanges();
 
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
